@@ -6,7 +6,7 @@
 import numpy as np
 from layers import Input, Dense
 from network import Network
-from activations import relu, softmax
+from activation import relu, softmax
 
 # Instantier et netværk
 model = Network()
@@ -19,5 +19,13 @@ model.add(Dense(10, softmax))
 # Byg netværket (initialiserer vægte og bias for lagene)
 model.build()
 
-output = model.feedforward(np.random.randn(10,))
-print("Netværkets output:", output, sep="\n")
+#print(model.layers[1].weights.shape)
+#model.layers[1].backProp(np.random.randn(10,))
+
+l, y = model.backProp((np.random.randn(10,),1))
+
+print(len(l))
+print(len(y))
+
+#output = model.feedForward(np.random.randn(10,))
+#print("Netværkets output:", output, sep="\n")

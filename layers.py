@@ -3,7 +3,8 @@
 # NEXT Sukkertoppen, S3n
 
 import numpy as np
-from typing import Callable, List, Tuple
+from typing import Callable, List, Tuple, Union
+import activation
 
 class Layer:
     def __init__(self):
@@ -20,7 +21,7 @@ class Input(Layer):
         self.inputShape = inputShape
         self.numNodes = np.prod(inputShape)
 
-    def feedforward(self, a: np.ndarray) -> np.ndarray:
+    def feedForward(self, a: np.ndarray) -> np.ndarray:
         return a
 
 class Dense(Layer):
@@ -29,9 +30,15 @@ class Dense(Layer):
         self.numNodes = numNodes
         self.activation = activation
 
-    def feedforward(self, activations : np.ndarray) -> np.ndarray:
+    def feedForward(self, activations : np.ndarray, type="forward") -> Union[np.ndarray, Tuple[np.ndarray, np.ndarray]]:
         # Beregn z = W * a + b 
         z = np.dot(self.weights, activations) + self.biases
         # Beregn a = f(z) (f er aktiveringsfunktionen)
+        if type=="backpropagation": return (z, self.activation(z))
         return self.activation(z)
     
+    def backProp(self, activation : np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
+        nabla_w = np.zeros(shape=self.weights.shape)
+        nabla_b = np.zeros(shape=self.biases.shape)
+
+        return (nabla_w, nabla_b)
