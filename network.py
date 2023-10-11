@@ -34,20 +34,16 @@ class Network:
         return a
     
     def backProp(self, data : Tuple[Activation, Label]) -> Tuple[np.ndarray, np.ndarray]:
-        # Kald backprop for  et layer[i-1] med et argument værdier[i-1]
-        # Definer et array som gemmer alle aktiveringsværdierne for hvert lag for et givent træningseksempel. Find således disse værdier
-        #o utput error er givet ved a[:-1] - one_hot(Label)
-        # # Vi ønsker at finde alle aktiveringsværdier og alle z-værdier gennem hele netværket for et givent træningseksempel
         X, y = data
-        nabla_w, nabla_b = [], []
+        nabla_w = [np.zeros(layer.weights.shape) for layer in self.layers[1:]]
 
-        for i in range(1, len(self.layers)):
-            n_w, n_b = self.layers[i].backProp(X)
-            X = self.layers[i].feedForward(X)
-            nabla_w.append(n_w)
-            nabla_b.append(n_b)
+        # Beregning af alle aktiveringsværdier og z-værdier i netværket
+        z = []
+        a = [data[0]]
+        for layer in self.layers[1:]:
+            print("l")
 
-        return (nabla_w, nabla_b)
+
     
     def updateParameters(self, gradients : List[Tuple[np.ndarray, np.ndarray]]) -> None:
         pass

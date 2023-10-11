@@ -22,10 +22,6 @@ model.build()
 #print(model.layers[1].weights.shape)
 #model.layers[1].backProp(np.random.randn(10,))
 
-l, y = model.backProp((np.random.randn(10,),1))
-
-print(len(l))
-print(len(y))
-
+model.backProp((np.random.randn(10,),1))
 #output = model.feedForward(np.random.randn(10,))
 #print("Netværkets output:", output, sep="\n")

@@ -37,8 +37,8 @@ class Dense(Layer):
         if type=="backpropagation": return (z, self.activation(z))
         return self.activation(z)
     
-    def backProp(self, activation : np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
-        nabla_w = np.zeros(shape=self.weights.shape)
-        nabla_b = np.zeros(shape=self.biases.shape)
-
-        return (nabla_w, nabla_b)
+    #def backProp(self, activation : np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
+    #    nabla_w = np.zeros(shape=self.weights.shape)
+    #    nabla_b = np.zeros(shape=self.biases.shape)
+    #
+    #    return (nabla_w, nabla_b)
