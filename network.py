@@ -36,6 +36,7 @@ class Network:
     def backProp(self, data : Tuple[Activation, Label]) -> Tuple[np.ndarray, np.ndarray]:
         X, y = data
         nablaW = [np.zeros(layer.weights.shape) for layer in self.layers[1:]]
+        nablaB = [np.zeros(layer.biases.shape) for layer in self.layers[1:]]
 
         # Beregning af alle aktiveringsværdier og z-værdier i netværket
         z = []
@@ -43,7 +44,12 @@ class Network:
         for layer in self.layers[1:]:
             print("l")
 
+        #outputError = self.feedForward(X) - np.eye(10)[y]
 
-    
+        print(outputError)
+
     def updateParameters(self, nablaCost: List[Tuple[np.ndarray, np.ndarray]]) -> None:
         pass
+
+
+    
