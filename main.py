@@ -19,9 +19,9 @@ model.add(Dense(10, softmax))
 # Byg netværket (initialiserer vægte og bias for lagene)
 model.build()
 
-#print(model.layers[1].weights.shape)
-#model.layers[1].backProp(np.random.randn(10,))
+trainingData = [(np.random.randn(10,), 1), (np.random.randn(10,), 2)]
 
-model.backProp((np.random.randn(10,),1))
-#output = model.feedForward(np.random.randn(10,))
-#print("Netværkets output:", output, sep="\n")
+a, z = model.compute_gradients(trainingData[0])
+
+print(a[1])
+print(a[2])

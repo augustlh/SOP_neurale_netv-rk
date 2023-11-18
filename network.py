@@ -32,24 +32,17 @@ class Network:
         for layer in self.layers:
             a = layer.feedForward(a)
         return a
-    
-    def backProp(self, data : Tuple[Activation, Label]) -> Tuple[np.ndarray, np.ndarray]:
-        X, y = data
-        nablaW = [np.zeros(layer.weights.shape) for layer in self.layers[1:]]
-        nablaB = [np.zeros(layer.biases.shape) for layer in self.layers[1:]]
 
-        # Beregning af alle aktiveringsværdier og z-værdier i netværket
-        z = []
-        a = [data[0]]
+    def compute_gradients(self, data):
+        X, y = data[0], data[1]
+
+        layer_activation_values = [X]
+        layer_z_values = []
+
         for layer in self.layers[1:]:
-            print("l")
+            z, X = layer.feedForward(X, type="backpropagation")
 
-        #outputError = self.feedForward(X) - np.eye(10)[y]
-
-        print(outputError)
-
-    def updateParameters(self, nablaCost: List[Tuple[np.ndarray, np.ndarray]]) -> None:
+            layer_activation_values.append(X)
+            layer_z_values.append(z)
+            
         pass
-
-
-    
