@@ -37,6 +37,8 @@ class Network:
     def compute_gradients(self, data):
         # Formatering af data for et givent træningseksempel. Label onehot-encodes for at kunne udføre vektor operationer.
         X, y_actual = data[0], np.eye(10)[data[1]]
+        nabla_w = [None] * len(self.layers)
+        nabla_b = [None] * len(self.layers)
 
         # Find og gem alle z, a værdier for alle lag
         self.calculate_outputs(X)
@@ -52,11 +54,11 @@ class Network:
         # \frac{\partial a}{\partial z} \cdot \frac{\partial C}{\partial a}
         error = self.cost.cost_derivative(y_true=y_actual, y_pred=output_layer.a) * output_layer.activation_function(activations=output_layer.z, derivative=True)
 
-        weightGradientOutputLayer = np.outer(error, self.layers[index-1].a)
-        biasGradientOutputLayer = error
+        nabla_w[-1] = np.outer(error, self.layers[index-1].a)
+        nabla_b[-1] = error
+
+        return nabla_w, nabla_b
         
-        print("Weight gradient output layer: ", weightGradientOutputLayer)
-        print("Bias gradient output layer: ", biasGradientOutputLayer)
 
     def calculate_outputs(self, data_point):
         for layer in self.layers:

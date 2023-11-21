@@ -26,7 +26,9 @@ model.add(Dense(10, softmax))
 model.build()
 
 #model.train(training_data[:10000], epochs=10, learning_rate=0.1)
-model.compute_gradients(training_data[0])
+w,b = model.compute_gradients(training_data[0])
+
+print(w, b)
 #print(ow)
 #print("---------------------------------------------------")
 #print(hw)
