@@ -12,3 +12,9 @@ def softmax(activations, derivative=False) -> np.ndarray:
     else:
         ex = np.exp(activations - np.max(activations))
         return ex / ex.sum(axis=0)
+
+def sigmoid(activations : np.ndarray, derivative=False) -> np.ndarray:
+    if derivative:
+        return sigmoid(activations) * (1 - sigmoid(activations))
+    else:
+        return 1.0 / (1.0 + np.exp(-activations))

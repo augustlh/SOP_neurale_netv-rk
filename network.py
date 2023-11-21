@@ -12,6 +12,7 @@ Activation = np.ndarray
 class Network:
     def __init__(self) -> None:
         self.layers: List[Layer] = []
+        self.cost = MeanSquaredError
 
     def add(self, layer : Layer):
         if len(self.layers) == 0:
@@ -32,17 +33,41 @@ class Network:
         for layer in self.layers:
             a = layer.feedForward(a)
         return a
-
+    
     def compute_gradients(self, data):
-        X, y = data[0], data[1]
+        # Formatering af data for et givent træningseksempel. Label onehot-encodes for at kunne udføre vektor operationer.
+        X, y_actual = data[0], np.eye(10)[data[1]]
 
-        layer_activation_values = [X]
-        layer_z_values = []
+        # Find og gem alle z, a værdier for alle lag
+        self.calculate_outputs(X)
 
-        for layer in self.layers[1:]:
-            z, X = layer.feedForward(X, type="backpropagation")
+        #Beregn fejlen for det sidste lag
+        index = len(self.layers) - 1
+        output_layer = self.layers[index]
+        
+        # --- Beregn gradienterne for output laget ---
+        # \frac{\partial C}{\partial W^index} = \frac{\partial z^index}{\partial w^index} \cdot \frac{\partial a}{\partial z} \cdot \frac{\partial C}{\partial a}
+        #                                     = a^(index - 1) \cdot y'(z^index) \cdot 2(a^index - y)
 
-            layer_activation_values.append(X)
-            layer_z_values.append(z)
-            
-        pass
+        # \frac{\partial a}{\partial z} \cdot \frac{\partial C}{\partial a}
+        error = self.cost.cost_derivative(y_true=y_actual, y_pred=output_layer.a) * output_layer.activation_function(activations=output_layer.z, derivative=True)
+
+        weightGradientOutputLayer = np.outer(error, self.layers[index-1].a)
+        biasGradientOutputLayer = error
+        
+        print("Weight gradient output layer: ", weightGradientOutputLayer)
+        print("Bias gradient output layer: ", biasGradientOutputLayer)
+
+    def calculate_outputs(self, data_point):
+        for layer in self.layers:
+            data_point = layer.store_layer_values(data_point)
+
+    
+class MeanSquaredError:
+    @staticmethod
+    def cost(y_true : np.ndarray, y_pred : np.ndarray) -> float:
+        return np.sum(np.square(y_true - y_pred)) 
+    
+    @staticmethod
+    def cost_derivative(y_true : np.ndarray, y_pred : np.ndarray) -> np.ndarray:
+        return 2 * (y_pred - y_true)
