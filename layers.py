@@ -63,4 +63,16 @@ class Dense(Layer):
 
         return nabla_w, nabla_b
     
+    def hiddenLayer_gradients(self, next_w, next_nodeValue):
+        # \frac{\partial a}{\partial z} \cdot \frac{\partial C}{\partial a}
+        nodeValue = np.dot(next_w.T, next_nodeValue) * self.activation_function(activations=self.z, derivative=True)
+
+        # nabla_w[index] = a_{l-1} \cdot output_nodeValue
+        nabla_w = np.outer(nodeValue, self.a)
+
+        #nabla_b[index] = 1 \cdot output_nodeValue
+        nabla_b = nodeValue
+
+        return nabla_w, nabla_b
+    
     

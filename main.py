@@ -18,17 +18,25 @@ training_data, test_data = MNIST.give_data()
 model = Network()
 
 # Definer netværkets struktur
+#model.add(Input((784,)))
+#model.add(Dense(30, sigmoid))
+#model.add(Dense(10, sigmoid))
+
 model.add(Input((784,)))
-model.add(Dense(30, relu))
-model.add(Dense(10, softmax))
+model.add(Dense(300, sigmoid))
+model.add(Dense(100, sigmoid))
+model.add(Dense(10, sigmoid))
 
 # Byg netværket (initialiserer vægte og bias for lagene)
 model.build()
 
 #model.train(training_data[:10000], epochs=10, learning_rate=0.1)
-w,b = model.compute_gradients(training_data[0])
+#w,b = model.compute_gradients(training_data[0])
+#model.beregn_gradienter(training_data[0])
+#model.feedForward(training_data[0][0])
+model.train2(training_data, epochs=10, test_data=test_data)
 
-print(w, b)
+#print(w, b)
 #print(ow)
 #print("---------------------------------------------------")
 #print(hw)

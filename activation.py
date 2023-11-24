@@ -8,7 +8,9 @@ def relu(activations : np.ndarray, derivative=False) -> np.ndarray:
 
 def softmax(activations, derivative=False) -> np.ndarray:
     if derivative:
-        return softmax(activations) * (1 - softmax(activations))
+        #return softmax(activations) * (1 - softmax(activations))
+        s = softmax(activations)
+        return s * (1 - s)
     else:
         ex = np.exp(activations - np.max(activations))
         return ex / ex.sum(axis=0)
