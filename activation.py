@@ -1,5 +1,6 @@
 import numpy as np
 
+# Relu aktiveringsfunktion. 
 def relu(activations : np.ndarray, derivative=False) -> np.ndarray:
     if derivative:
         return np.where(activations > 0, 1.0, 0.0)
@@ -15,6 +16,7 @@ def softmax(activations, derivative=False) -> np.ndarray:
         ex = np.exp(activations - np.max(activations))
         return ex / ex.sum(axis=0)
 
+# Sigmoi daktiveringsfunktionen
 def sigmoid(activations : np.ndarray, derivative=False) -> np.ndarray:
     if derivative:
         return sigmoid(activations) * (1 - sigmoid(activations))
