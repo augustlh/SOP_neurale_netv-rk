@@ -126,7 +126,7 @@ class Network:
             # Epoch accuracy graph
             visualizer.generate_graph(graph_name, epochs, ("Epoch", "Accuracy"), ("Test nøjagtighed", "Trænings nøjagtighed"), epoch_test_accuracy, epoch_training_accuracy)  
    
-    def evaluate(self, test_data : Data, generate_graphs : bool = False) -> float:
+    def evaluate(self, test_data : Data) -> float:
         correct = 0
         for data in test_data:
             if np.argmax(self.feedForward(data[0])) == data[1]:

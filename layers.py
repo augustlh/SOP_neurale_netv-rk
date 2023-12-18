@@ -54,7 +54,7 @@ class Input(Layer):
 # Nedarver fra Layer klassen og er et lag af typen Dense
 class Dense(Layer):
     def __init__(self, numNodes : int, activation : Callable[[np.ndarray], np.ndarray]):
-        # Hopper og kører superklassens constructor og definerer yderligere attributer relevante for denne type Lag
+        # Hopper tilbage i koden og kører superklassens constructor og definerer yderligere attributer relevante for denne type Lag
         super().__init__()
         self.numNodes = numNodes
         self.activation_function = activation
